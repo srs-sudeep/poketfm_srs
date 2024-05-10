@@ -1,7 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom'
 
-import Page404 from '../pages/Page404'
-import AppPage from '../pages/AppPage'
+import {AudioPage,AppPage,Page404,VideoPage}  from '../pages'
 import DashboardLayout from '../layouts/DashboardLayout'
 export default function Router() {
   const routes = useRoutes([
@@ -11,8 +10,8 @@ export default function Router() {
       children: [
         { path: '', element: <Navigate to="/app" /> },
         { path: 'app', element: <AppPage /> },
-        { path: 'video', element: <AppPage /> },
-        { path: 'audio', element: <AppPage /> },
+        { path: 'video', element: <VideoPage /> },
+        { path: 'audio', element: <AudioPage /> },
       ],
     },
 

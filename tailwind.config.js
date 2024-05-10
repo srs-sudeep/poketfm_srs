@@ -14,6 +14,7 @@ export default {
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
+      'gradient': 'gradient 8s linear infinite',
     },
     aria: {
       busy: 'busy="true"',
@@ -605,6 +606,9 @@ export default {
           animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
         },
       },
+      'gradient': {
+        to: { 'background-position': '200% center' },
+      }
     },
     letterSpacing: {
       tighter: '-0.05em',
