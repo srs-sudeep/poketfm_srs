@@ -37,7 +37,7 @@ const VideoPage = () => {
     controlRef.current.style.visibility = 'visible'
   }
   const progressHandler = (state) => {
-    if (count > 5) {
+    if (count > 3) {
       controlRef.current.style.visibility = 'hidden'
     } else if (controlRef.current.style.visibility === 'visible') {
       count += 1
@@ -157,7 +157,8 @@ const VideoPage = () => {
   }
   const isAudioOnly =
     mediaUrls[currentMediaIndex].endsWith('.mp3') ||
-    mediaUrls[currentMediaIndex].endsWith('.wav')
+    mediaUrls[currentMediaIndex].endsWith('.wav') ||
+    mediaUrls[currentMediaIndex].endsWith('.ogg')
 
   return (
     <>
@@ -238,8 +239,7 @@ const VideoPage = () => {
           </Container>
         </div>
         <div className="my-4 md:my-2 md:w-1/4 border-l px-2 border-gray-300 pr-4">
-          {/* Video List */}
-          <Typography variant='h4' className="text-xl mb-4">Video List</Typography>
+          <Typography variant='h4' className="text-xl mb-4">Playlist</Typography>
           <div className="overflow-y-auto h-80">
             <ul>
               {media.map((video, index) => (

@@ -1,24 +1,60 @@
 {
   "media": [
     {
-      "title": "Big Buck Bunny",
+      "title": "Bigger Escapes Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+    },
+    {
+      "title": "Bigger Fun Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+    },
+    {
+      "title": "Sevish Music Mp3",
+      "url": "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Sevish_-__nbsp_.mp3"
+    },
+    {
+      "title": "Big Buck Bunny Video",
       "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
     },
     {
-      "title": "Kangaroo MusiQue",
+      "title": "Kangaroo Music Mp3",
       "url": "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
     },
     {
-      "title": "Elephants Dream",
+      "title": "Sintel Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+    },
+    {
+      "title": "Evil Laugh Music ogg",
+      "url": "https://commondatastorage.googleapis.com/codeskulptor-assets/Evillaugh.ogg"
+    },
+    {
+      "title": "Elephants Dream Video",
       "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
     },
     {
-      "title": "Paza Moduless",
+      "title": "Paza Moduless Music Mp3",
       "url": "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"
     },
     {
-      "title": "For Bigger Blazes",
+      "title": "For Bigger Blazes Video",
       "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    },
+    {
+      "title": "Street and Dirt Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+    },
+    {
+      "title": "Tears of Steel Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+    }   ,
+    {
+      "title": "We are going on a Bull Run Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
+    },
+        {
+      "title": "What can I get you for a Grand Video",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
     }
   ],
   "currentMediaIndex": 0

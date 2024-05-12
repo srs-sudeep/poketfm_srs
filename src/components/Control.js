@@ -215,13 +215,14 @@ const Control = ({
                 }
               }}
               value={volume * 100}
+              color='secondary'
               onChangeCommitted={onVolumeSeekUp}
             />
             <span className="text-xs">{currentTime}</span>
             <span className="text-xs">/</span>
             <span className="text-xs">{duration}</span>
           </div>
-          <div className="flex flex-row gap-6">
+          <div className="flex flex-row gap-6 items-center">
             <FullscreenIcon
               size="medium"
               onClick={onClickFullscreen}
@@ -235,7 +236,8 @@ const Control = ({
             <Select
               value={playRate}
               onChange={(e) => onPlayRateChange(parseFloat(e.target.value))}
-              style={{ color: 'white' }}
+              style={{ color: 'white'}}
+              className='text-white h-10'
             >
               {[...Array(15)].map((_, index) => (
                 <MenuItem key={index} value={(index + 2) / 4}>
