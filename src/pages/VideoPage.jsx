@@ -1,38 +1,264 @@
-import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
-
+import ReactPlayer from 'react-player'
+import Container from '@mui/material/Container'
+import Control from '../components/Control'
+import Typography from '@mui/material/Typography'
+import { useState, useRef, useEffect } from 'react'
+import { formatTime } from '../utils'
+import screenfull from 'screenfull' // Import screenfull library
+import CircularProgress from '@mui/material/CircularProgress' // Import CircularProgress component from Material-UI
+import { useDispatch, useSelector } from 'react-redux'
+import { setMediaUrls, setCurrentMediaIndex } from '../app/slices'
+let count = 0
 const VideoPage = () => {
-  // Sample video URLs
-  const videoUrls = [
-    'https://www.example.com/video1.mp4',
-    'https://www.example.com/video2.mp4',
-    // Add more video URLs here
-  ];
+  const controlRef = useRef(null)
+  const videoPlayerRef = useRef(null)
+  const [videoState, setVideoState] = useState({
+    playing: true,
+    muted: true,
+    volume: 0.5,
+    playbackRate: 1.0,
+    played: 0,
+    seeking: false,
+    buffer: true,
+  })
+  const dispatch = useDispatch()
+  const handleVideoSelect = (index) => {
+    dispatch(setCurrentMediaIndex(index))
+  }
+  // Redux state
+  const mediaUrls = useSelector((state) => state.videos.mediaUrls)
+  const currentMediaIndex = useSelector(
+    (state) => state.videos.currentMediaIndex,
+  )
+  const { playing, muted, volume, playbackRate, played, seeking, buffer } =
+    videoState
+  const onMouseMoveCaptureHandler = () => {
+    controlRef.current.style.visibility = 'visible'
+  }
+  const progressHandler = (state) => {
+    if (count > 5) {
+      controlRef.current.style.visibility = 'hidden'
+    } else if (controlRef.current.style.visibility === 'visible') {
+      count += 1
+    }
 
-  const [selectedVideo, setSelectedVideo] = useState(videoUrls[0]);
+    if (!seeking) {
+      setVideoState({ ...videoState, ...state })
+    }
+  }
+  const playPauseHandler = () => {
+    //plays and pause the video (toggling)
+    setVideoState({ ...videoState, playing: !videoState.playing })
+  }
 
-  const handleVideoSelect = (videoUrl) => {
-    setSelectedVideo(videoUrl);
-  };
+  const muteHandler = () => {
+    //Mutes the video player
+    setVideoState({ ...videoState, muted: !videoState.muted })
+  }
+  const volumeChangeHandler = (e, value) => {
+    const newVolume = parseFloat(value) / 100
+
+    setVideoState({
+      ...videoState,
+      volume: newVolume,
+      muted: Number(newVolume) === 0 ? true : false, // volume === 0 then muted
+    })
+  }
+
+  const volumeSeekUpHandler = (e, value) => {
+    const newVolume = parseFloat(value) / 100
+
+    setVideoState({
+      ...videoState,
+      volume: newVolume,
+      muted: newVolume === 0 ? true : false,
+    })
+  }
+
+  const currentTime = videoPlayerRef.current
+    ? videoPlayerRef.current.getCurrentTime()
+    : '00:00'
+  const duration = videoPlayerRef.current
+    ? videoPlayerRef.current.getDuration()
+    : '00:00'
+
+  const formatCurrentTime = formatTime(currentTime)
+  const formatDuration = formatTime(duration)
+  const seekHandler = (e, value) => {
+    setVideoState({ ...videoState, played: parseFloat(value / 100) })
+    videoPlayerRef.current.seekTo(parseFloat(value / 100))
+    console.log(videoPlayerRef.current)
+  }
+
+  const seekMouseUpHandler = (e, value) => {
+    console.log(value)
+
+    setVideoState({ ...videoState, seeking: false })
+    videoPlayerRef.current.seekTo(value / 100)
+  }
+  const onSeekMouseDownHandler = (e) => {
+    setVideoState({ ...videoState, seeking: true })
+  }
+  const rewindHandler = () => {
+    //Rewinds the video player reducing 5
+    videoPlayerRef.current.seekTo(videoPlayerRef.current.getCurrentTime() - 10)
+  }
+  const fastFowardHandler = () => {
+    //FastFowards the video player by adding 10
+    videoPlayerRef.current.seekTo(videoPlayerRef.current.getCurrentTime() + 10)
+  }
+  const bufferStartHandler = () => {
+    console.log('Bufering.......')
+    setVideoState({ ...videoState, buffer: true })
+  }
+
+  const bufferEndHandler = () => {
+    console.log('buffering stoped ,,,,,,play')
+    setVideoState({ ...videoState, buffer: false })
+  }
+  const handleClickFullscreen = () => {
+    if (screenfull.isEnabled && videoPlayerRef.current) {
+      screenfull.request(videoPlayerRef.current.wrapper)
+    }
+  }
+  const handleClickPIP = () => {
+    if (videoPlayerRef.current) {
+      const videoElement = videoPlayerRef.current.getInternalPlayer()
+      if (document.pictureInPictureEnabled && videoElement) {
+        videoElement
+          .requestPictureInPicture()
+          .then(() => {
+            console.log('Entered Picture-in-Picture mode')
+          })
+          .catch((error) => {
+            console.error('Failed to enter Picture-in-Picture mode:', error)
+          })
+      } else {
+        console.error(
+          'Picture-in-Picture mode is not supported in this browser',
+        )
+      }
+    }
+  }
+  const previousMedia = () => {
+    dispatch(
+      setCurrentMediaIndex(
+        currentMediaIndex === 0 ? mediaUrls.length - 1 : currentMediaIndex - 1,
+      ),
+    )
+  }
+
+  const nextMedia = () => {
+    dispatch(setCurrentMediaIndex((currentMediaIndex + 1) % mediaUrls.length))
+  }
+  const onPlayRateChange = (rate) => {
+    setVideoState({ ...videoState, playbackRate: rate })
+  }
+  const isAudioOnly =
+    mediaUrls[currentMediaIndex].endsWith('.mp3') ||
+    mediaUrls[currentMediaIndex].endsWith('.wav')
 
   return (
-    <div className="flex justify-center items-center h-full">
-      <div className="w-1/2">
-        {/* React Player */}
-        <ReactPlayer url={selectedVideo} controls width="100%" height="100%" />
+    <>
+      <div>
+        <Typography
+          variant="h3"
+          gutterBottom
+          className="text-center py-5 text-6xl md:text-9xl font-black bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] bg-[length:200%_auto] animate-gradient"
+        >
+          SonicFlix Player
+        </Typography>
       </div>
-      <div className="w-1/2">
-        {/* Video List */}
-        <ul>
-          {videoUrls.map((videoUrl, index) => (
-            <li key={index}>
-              <button onClick={() => handleVideoSelect(videoUrl)}>Video {index + 1}</button>
-            </li>
-          ))}
-        </ul>
+      <div className="flex justify-center items-center flex-col md:flex-row ">
+        <div className=" w-3/4">
+          <Container maxWidth="md" justify="center">
+            <div className="relative" onMouseMove={onMouseMoveCaptureHandler}>
+              {isAudioOnly ? ( // Display black background only for audio files
+                <img
+                  src='public/black.jpg'
+                  alt="Blank"
+                  style={{ width: '100%', height: '100%' }}
+                  className='border-yellow-100'
+                />
+              ) : (
+                <></>
+              )}
+              <ReactPlayer
+                className="react-player border border-yellow-100"
+                url={mediaUrls[currentMediaIndex]}
+                width="100%"
+                height="100%"
+                playing={playing}
+                muted={muted}
+                ref={videoPlayerRef}
+                onProgress={progressHandler}
+                onBuffer={bufferStartHandler}
+                onBufferEnd={bufferEndHandler}
+              />
+              {buffer && (
+                <CircularProgress
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                />
+              )}{' '}
+              {/* Display CircularProgress component when buffering */}
+              {!buffer && (
+                <Control
+                  controlRef={controlRef}
+                  onPlayPause={playPauseHandler}
+                  playing={playing}
+                  mute={muted}
+                  onMute={muteHandler}
+                  volume={volume}
+                  onVolumeChangeHandler={volumeChangeHandler}
+                  onVolumeSeekUp={volumeSeekUpHandler}
+                  played={played}
+                  onSeek={seekHandler}
+                  onSeekMouseUp={seekMouseUpHandler}
+                  onMouseSeekDown={onSeekMouseDownHandler}
+                  duration={formatDuration}
+                  currentTime={formatCurrentTime}
+                  onRewind={rewindHandler}
+                  onForward={fastFowardHandler}
+                  onClickFullscreen={handleClickFullscreen}
+                  onClickPIP={handleClickPIP}
+                  onPreviousMedia={previousMedia}
+                  onNextMedia={nextMedia}
+                  playRate={playbackRate}
+                  onPlayRateChange={onPlayRateChange}
+                />
+              )}
+            </div>
+          </Container>
+        </div>
+        <div className="w-1/4">
+          {/* Video List */}
+          <ul>
+            {mediaUrls.map((video, index) => (
+              <li key={index}>
+                <button onClick={() => handleVideoSelect(index)}>
+                  {/* Video {index + 1} - {video.title} */}
+                  {video}
+                </button>
+              </li>
+            ))}
+          </ul>
+          {/* {videos.map((video) => (
+            <div key={video.id}>
+              <h2>{video.title}</h2>
+              <video controls>
+                <source src={video.url} type="video/mp4" />
+              </video>
+            </div>
+          ))} */}
+        </div>
       </div>
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default VideoPage;
+export default VideoPage

@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import { useNavigate } from 'react-router-dom'
 
-const pages = ['Video', 'Audio']
+const pages = ['Video']
 const settings = []
 
 function Header() {
@@ -43,8 +43,6 @@ function Header() {
     handleCloseNavMenu()
     if (page === 'Video') {
       navigate('/video')
-    } else if (page === 'Audio') {
-      navigate('/audio')
     }
   }
 
