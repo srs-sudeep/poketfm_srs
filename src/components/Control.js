@@ -38,6 +38,7 @@ const Control = ({
   onNextMedia,
   playRate,
   onPlayRateChange,
+  onTitle
 }) => {
   const PrettoSlider = styled(Slider)({
     color: '#52af77',
@@ -145,7 +146,7 @@ const Control = ({
       className={` flex bg-black/[0.6] absolute top-0 bottom-0 left-0 right-0 flex-col z-1 justify-between`}
     >
       <div className="mx-2 my-3 text-icon font-black">
-        <h2>Video Player</h2>
+        <h2>{onTitle}</h2>
       </div>
       <div className="flex flex-row justify-center items-center gap-5">
         <div className="text-icon" onClick={onPreviousMedia}>
@@ -183,7 +184,7 @@ const Control = ({
             onMouseDown={onMouseSeekDown}
           />
         </div>
-        <div className="flex items-center justify-stretch w-[100%]">
+        <div className="flex items-center justify-between w-[100%]">
           <div className="mx-5 flex items-center flex-row gap-5 w-[35%]">
             <div className="text-icon" onClick={onPlayPause}>
               {playing ? (

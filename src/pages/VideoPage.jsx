@@ -26,7 +26,8 @@ const VideoPage = () => {
     dispatch(setCurrentMediaIndex(index))
   }
   // Redux state
-  const mediaUrls = useSelector((state) => state.videos.mediaUrls)
+  const media = useSelector((state) => state.videos.media)
+  const mediaUrls = media.map((item) => item.url)
   const currentMediaIndex = useSelector(
     (state) => state.videos.currentMediaIndex,
   )
@@ -175,10 +176,10 @@ const VideoPage = () => {
             <div className="relative" onMouseMove={onMouseMoveCaptureHandler}>
               {isAudioOnly ? ( // Display black background only for audio files
                 <img
-                  src='public/black.jpg'
+                  src="public/black.jpg"
                   alt="Blank"
                   style={{ width: '100%', height: '100%' }}
-                  className='border-yellow-100'
+                  className="border-yellow-100"
                 />
               ) : (
                 <></>
@@ -230,31 +231,29 @@ const VideoPage = () => {
                   onNextMedia={nextMedia}
                   playRate={playbackRate}
                   onPlayRateChange={onPlayRateChange}
+                  onTitle = {media[currentMediaIndex].title}
                 />
               )}
             </div>
           </Container>
         </div>
-        <div className="w-1/4">
+        <div className="my-4 md:my-2 md:w-1/4 border-l px-2 border-gray-300 pr-4">
           {/* Video List */}
-          <ul>
-            {mediaUrls.map((video, index) => (
-              <li key={index}>
-                <button onClick={() => handleVideoSelect(index)}>
-                  {/* Video {index + 1} - {video.title} */}
-                  {video}
-                </button>
-              </li>
-            ))}
-          </ul>
-          {/* {videos.map((video) => (
-            <div key={video.id}>
-              <h2>{video.title}</h2>
-              <video controls>
-                <source src={video.url} type="video/mp4" />
-              </video>
-            </div>
-          ))} */}
+          <Typography variant='h4' className="text-xl mb-4">Video List</Typography>
+          <div className="overflow-y-auto h-80">
+            <ul>
+              {media.map((video, index) => (
+                <li key={index} className="mb-2">
+                  <button
+                    onClick={() => handleVideoSelect(index)}
+                    className="text-base text-blue-600 hover:text-blue-800 focus:outline-none"
+                  >
+                    {video.title}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </>

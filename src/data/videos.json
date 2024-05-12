@@ -1,0 +1,25 @@
+{
+  "media": [
+    {
+      "title": "Big Buck Bunny",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    },
+    {
+      "title": "Kangaroo MusiQue",
+      "url": "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
+    },
+    {
+      "title": "Elephants Dream",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+    },
+    {
+      "title": "Paza Moduless",
+      "url": "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"
+    },
+    {
+      "title": "For Bigger Blazes",
+      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    }
+  ],
+  "currentMediaIndex": 0
+}
