@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import { useNavigate } from 'react-router-dom'
-
+import Logo from '../assets/images/logo.jpeg' 
 const pages = ['Video']
 const settings = []
 
@@ -56,7 +56,7 @@ function Header() {
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
            */}
-           <img src="public/logo.jpeg" alt="logo" className="h-10 w-10 mx-3 hidden md:flex" />
+           <img src={Logo} alt="logo" className="h-10 w-10 mx-3 hidden md:flex" />
           <Typography
             variant="h6"
             noWrap
@@ -111,7 +111,7 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          <img src="public/logo.jpeg" alt="logo" className="h-10 w-10 mx-3 flex md:hidden" />
+          <img src={Logo} alt="logo" className="h-10 w-10 mx-3 flex md:hidden" />
           <Typography
             variant="h5"
             noWrap

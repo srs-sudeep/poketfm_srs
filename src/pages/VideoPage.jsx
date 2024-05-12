@@ -9,6 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress' // Import Circular
 import { useDispatch, useSelector } from 'react-redux'
 import { setMediaUrls, setCurrentMediaIndex } from '../app/slices'
 let count = 0
+import Black from '../assets/images/black.jpg'
 const VideoPage = () => {
   const controlRef = useRef(null)
   const videoPlayerRef = useRef(null)
@@ -177,7 +178,7 @@ const VideoPage = () => {
             <div className="relative" onMouseMove={onMouseMoveCaptureHandler}>
               {isAudioOnly ? ( // Display black background only for audio files
                 <img
-                  src="public/black.jpg"
+                  src={Black}
                   alt="Blank"
                   style={{ width: '100%', height: '100%' }}
                   className="border-yellow-100"
