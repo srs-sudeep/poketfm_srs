@@ -8,7 +8,6 @@ export default function Router() {
       path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: '', element: <Navigate to="/" /> },
         { path: '', element: <AppPage /> },
         { path: 'video', element: <VideoPage /> },
       ],
